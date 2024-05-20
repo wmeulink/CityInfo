@@ -27,7 +27,8 @@ builder.Services.AddControllers(options =>
 
 builder.Services.AddProblemDetails();
 
-// Learn more about configuring Swagger/OpenAPI at
+// Learn more about co
+// nfiguring Swagger/OpenAPI at
 // https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -39,7 +40,10 @@ builder.Services.AddTransient<IMailService, LocalMailService>();
 builder.Services.AddTransient<IMailService, CloudMailService();
 #endif
 builder.Services.AddSingleton<CitiesDataStore>();
-builder.Services.AddDbContext<CityInfoContext>(dbContextOptions => dbContextOptions.UseSqlite("Data Source=CityInfo.db"));
+builder.Services.AddDbContext<CityInfoContext>(dbContextOptions => dbContextOptions.UseSqlite(builder.Configuration["ConnectionStrings:CityInfoDBConnectionString"]));
+builder.Services.AddScoped<ICityInfoRepository, CityInfoRepository>();
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
 
 var app = builder.Build();
 
